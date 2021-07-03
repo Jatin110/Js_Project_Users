@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">USERS</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <select class="form-control" id="drop">
+                <option value="" disabled selected>Choose one to sort</option>
+                <option value="first">Sort by first name</option>
+                <option value="last">Sort by last name</option>
+                <option value="none">none</option>
+            </select>
+        </div>
+      </nav>
+    <div class="container-fluid p-2 text-center">
+        <div class="spinner-border" role="status" id="loader">
+            <span class="sr-only">Loading...</span>
+          </div>
+        <div class="row" id="jatin"></div>
+
+        <table class="table table-striped table-dark" id="jatin_table2">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">Email</th>
+                <th scope="col">Avatar</th>
+              </tr>
+            </thead>
+            <tbody id="jatin_table">
+            </tbody>
+
+
+    </div>
+
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+  var main_data = [];
+  $('#jatin_table').html("");
+  $('#jatin_table2').hide();
+  const jb = async () => {
+  const response = await fetch('https://reqres.in/api/users?delay=3')
+  const data = await response.json()
+    main_data = data['data'];
+    console.log(main_data);
+    $('#loader').hide();
+    $('#jatin').html("");
+   // main_data.sort((a, b) => (a.first_name > b.first_name) ? 1 : -1)
+main_data.forEach(fun1 => {
+
+    $('#jatin').append('<div class="col-md-4 mt-2"><div class="card" style="width:400px"><img class="card-img-top" src='+fun1['avatar']+' alt="Card image" style="width:100%"><div class="card-body"><h4 class="card-title">'+fun1['first_name']+' '+fun1['last_name']+'</h4><p class="card-text">'+fun1['email']+'</p></div></div></div>');
+
+});
+}
+
+var second_data = [];
+function jatin_data(id)
+{
+
+    const jb1 = async () => {
+    console.log('https://reqres.in/api/users/'+id);
+  const response1 = await fetch('https://reqres.in/api/users/'+id)
+  const data1 = await response1.json()
+    second_data = data1['data'];
+    console.log(second_data);
+    $('#loader').hide();
+    $('#jatin_table2').show();
+    $('#jatin').html("");
+    $('#jatin_table').html("");
+    // $('#jatin_table').append('<tr> ID: '+second_data['id']+'</tr>');
+    // $('#jatin_table').append('<tr> First name: '+second_data['first_name']+'</tr>');
+    // $('#jatin_table').append('<tr> Last Name: '+second_data['last_name']+'</tr>');
+    // $('#jatin_table').append('<tr> Email: '+second_data['email']+'</tr>');
+    // $('#jatin_table').append('<tr> Avatar: <img src='+second_data['avatar']+'></tr>');
+
+
+    $('#jatin_table').append('<tr><td>'+second_data['id']+'</td>><td>'+second_data['first_name']+'</td>><td>'+second_data['last_name']+'</td>><td>'+second_data['email']+'</td><td><img src='+second_data['avatar']+'></td></tr>');
+
+}
+
+jb1();
+}
+
+
+
+
+jb()
+
+$('#drop').on('change',function(){
+    var choosen = $('#drop').val();
+    if(choosen=="first")
+    {
+        $('#jatin_table').html("");
+        $('#jatin_table2').hide();
+        main_data.sort((a, b) => (a.first_name > b.first_name) ? 1 : -1)
+        $('#jatin').html("");
+        main_data.forEach(fun1 => {
+            var id = fun1['id']
+            $('#jatin').append('<div class="col-md-4 mt-2 card_data_info" data-id = '+id+'><div class="card" style="width:400px"><img class="card-img-top" src='+fun1['avatar']+' alt="Card image" style="width:100%"><div class="card-body"><h4 class="card-title">'+fun1['first_name']+' '+fun1['last_name']+'</h4><p class="card-text">'+fun1['email']+'</p></div></div>');
+        });
+    }
+    else if(choosen=="last")
+    {
+        $('#jatin_table').html("");
+        $('#jatin_table2').hide();
+        main_data.sort((a, b) => (a.last_name > b.last_name) ? 1 : -1)
+        $('#jatin').html("");
+        main_data.forEach(fun1 => {
+            var id = fun1['id']
+           // $('#jatin').append('<a href="https://reqres.in/api/users/2"> <div class="col-md-4 mt-2"><div class="card" style="width:400px"><img class="card-img-top" src='+fun1['avatar']+' alt="Card image" style="width:100%"><div class="card-body"><h4 class="card-title">'+fun1['first_name']+' '+fun1['last_name']+'</h4><p class="card-text">'+fun1['email']+'</p></div></div></div></a>');
+            $('#jatin').append('<div class="col-md-4 mt-2 card_data_info" data-id = '+id+'><div class="card" style="width:400px"><img class="card-img-top" src='+fun1['avatar']+' alt="Card image" style="width:100%"><div class="card-body"><h4 class="card-title">'+fun1['first_name']+' '+fun1['last_name']+'</h4><p class="card-text">'+fun1['email']+'</p></div></div>');
+        });
+
+    }
+    else if(choosen=="none")
+    {
+        $('#jatin_table').html("");
+        $('#jatin_table2').hide();
+      //  main_data.sort((a, b) => (a.last_name > b.last_name) ? 1 : -1)
+        $('#jatin').html("");
+        main_data.forEach(fun1 => {
+            var id = fun1['id']
+           // $('#jatin').append('<a href="https://reqres.in/api/users/2"> <div class="col-md-4 mt-2"><div class="card" style="width:400px"><img class="card-img-top" src='+fun1['avatar']+' alt="Card image" style="width:100%"><div class="card-body"><h4 class="card-title">'+fun1['first_name']+' '+fun1['last_name']+'</h4><p class="card-text">'+fun1['email']+'</p></div></div></div></a>');
+            $('#jatin').append('<div class="col-md-4 mt-2 card_data_info" data-id = '+id+'><div class="card" style="width:400px"><img class="card-img-top" src='+fun1['avatar']+' alt="Card image" style="width:100%"><div class="card-body"><h4 class="card-title">'+fun1['first_name']+' '+fun1['last_name']+'</h4><p class="card-text">'+fun1['email']+'</p></div></div>');
+        });
+
+    }
+
+})
+
+
+
+$(document).on('click', '.card_data_info', function(e) {
+            var instance = $(this);
+            var card_id = instance.data("id");
+            console.log(card_id);
+            jatin_data(card_id);
+
+        });
+
+    </script>
+</body>
+</html>
