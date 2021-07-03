@@ -9,6 +9,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .scene_element--fadein {
+            animation-name: fadeIn;
+        }
+    </style>
+    
     <title>Document</title>
 </head>
 <body>
@@ -37,8 +43,8 @@
             <thead>
               <tr>
                 <th scope="col">ID</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
                 <th scope="col">Email</th>
                 <th scope="col">Avatar</th>
               </tr>
@@ -46,9 +52,7 @@
             <tbody id="jatin_table">
             </tbody>
 
-
     </div>
-
 
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
@@ -64,12 +68,10 @@
     console.log(main_data);
     $('#loader').hide();
     $('#jatin').html("");
-   // main_data.sort((a, b) => (a.first_name > b.first_name) ? 1 : -1)
-main_data.forEach(fun1 => {
-
-    $('#jatin').append('<div class="col-md-4 mt-2"><div class="card" style="width:400px"><img class="card-img-top" src='+fun1['avatar']+' alt="Card image" style="width:100%"><div class="card-body"><h4 class="card-title">'+fun1['first_name']+' '+fun1['last_name']+'</h4><p class="card-text">'+fun1['email']+'</p></div></div></div>');
-
-});
+    main_data.forEach(fun1 => {
+            var id = fun1['id']
+            $('#jatin').append('<div class="col-md-4 mt-2 card_data_info" data-id = '+id+'><div class="card" style="width:300px"><img class="card-img-top" src='+fun1['avatar']+' alt="Card image" style="width:250px"><div class="card-body"><h4 class="card-title">'+fun1['first_name']+' '+fun1['last_name']+'</p></div></div>');
+    });
 }
 
 var second_data = [];
@@ -86,22 +88,13 @@ function jatin_data(id)
     $('#jatin_table2').show();
     $('#jatin').html("");
     $('#jatin_table').html("");
-    // $('#jatin_table').append('<tr> ID: '+second_data['id']+'</tr>');
-    // $('#jatin_table').append('<tr> First name: '+second_data['first_name']+'</tr>');
-    // $('#jatin_table').append('<tr> Last Name: '+second_data['last_name']+'</tr>');
-    // $('#jatin_table').append('<tr> Email: '+second_data['email']+'</tr>');
-    // $('#jatin_table').append('<tr> Avatar: <img src='+second_data['avatar']+'></tr>');
-
-
+   
     $('#jatin_table').append('<tr><td>'+second_data['id']+'</td>><td>'+second_data['first_name']+'</td>><td>'+second_data['last_name']+'</td>><td>'+second_data['email']+'</td><td><img src='+second_data['avatar']+'></td></tr>');
 
 }
 
 jb1();
 }
-
-
-
 
 jb()
 
@@ -115,7 +108,7 @@ $('#drop').on('change',function(){
         $('#jatin').html("");
         main_data.forEach(fun1 => {
             var id = fun1['id']
-            $('#jatin').append('<div class="col-md-4 mt-2 card_data_info" data-id = '+id+'><div class="card" style="width:400px"><img class="card-img-top" src='+fun1['avatar']+' alt="Card image" style="width:100%"><div class="card-body"><h4 class="card-title">'+fun1['first_name']+' '+fun1['last_name']+'</h4><p class="card-text">'+fun1['email']+'</p></div></div>');
+            $('#jatin').append('<div class="col-md-4 mt-2 card_data_info" data-id = '+id+'><div class="card" style="width:300px"><img class="card-img-top" src='+fun1['avatar']+' alt="Card image" style="width:250px"><div class="card-body"><h4 class="card-title">'+fun1['first_name']+' '+fun1['last_name']+'</p></div></div>');
         });
     }
     else if(choosen=="last")
@@ -126,8 +119,7 @@ $('#drop').on('change',function(){
         $('#jatin').html("");
         main_data.forEach(fun1 => {
             var id = fun1['id']
-           // $('#jatin').append('<a href="https://reqres.in/api/users/2"> <div class="col-md-4 mt-2"><div class="card" style="width:400px"><img class="card-img-top" src='+fun1['avatar']+' alt="Card image" style="width:100%"><div class="card-body"><h4 class="card-title">'+fun1['first_name']+' '+fun1['last_name']+'</h4><p class="card-text">'+fun1['email']+'</p></div></div></div></a>');
-            $('#jatin').append('<div class="col-md-4 mt-2 card_data_info" data-id = '+id+'><div class="card" style="width:400px"><img class="card-img-top" src='+fun1['avatar']+' alt="Card image" style="width:100%"><div class="card-body"><h4 class="card-title">'+fun1['first_name']+' '+fun1['last_name']+'</h4><p class="card-text">'+fun1['email']+'</p></div></div>');
+            $('#jatin').append('<div class="col-md-4 mt-2 card_data_info" data-id = '+id+'><div class="card" style="width:300px"><img class="card-img-top" src='+fun1['avatar']+' alt="Card image" style="width:250px"><div class="card-body"><h4 class="card-title">'+fun1['first_name']+' '+fun1['last_name']+'</p></div></div>');
         });
 
     }
@@ -135,28 +127,25 @@ $('#drop').on('change',function(){
     {
         $('#jatin_table').html("");
         $('#jatin_table2').hide();
-      //  main_data.sort((a, b) => (a.last_name > b.last_name) ? 1 : -1)
         $('#jatin').html("");
         main_data.forEach(fun1 => {
             var id = fun1['id']
-           // $('#jatin').append('<a href="https://reqres.in/api/users/2"> <div class="col-md-4 mt-2"><div class="card" style="width:400px"><img class="card-img-top" src='+fun1['avatar']+' alt="Card image" style="width:100%"><div class="card-body"><h4 class="card-title">'+fun1['first_name']+' '+fun1['last_name']+'</h4><p class="card-text">'+fun1['email']+'</p></div></div></div></a>');
-            $('#jatin').append('<div class="col-md-4 mt-2 card_data_info" data-id = '+id+'><div class="card" style="width:400px"><img class="card-img-top" src='+fun1['avatar']+' alt="Card image" style="width:100%"><div class="card-body"><h4 class="card-title">'+fun1['first_name']+' '+fun1['last_name']+'</h4><p class="card-text">'+fun1['email']+'</p></div></div>');
+            $('#jatin').append('<div class="col-md-4 mt-2 card_data_info" data-id = '+id+'><div class="card" style="width:300px"><img class="card-img-top" src='+fun1['avatar']+' alt="Card image" style="width:250px"><div class="card-body"><h4 class="card-title">'+fun1['first_name']+' '+fun1['last_name']+'</p></div></div>');
         });
 
     }
 
 })
 
-
-
 $(document).on('click', '.card_data_info', function(e) {
-            var instance = $(this);
+        var instance = $(this);
             var card_id = instance.data("id");
             console.log(card_id);
             jatin_data(card_id);
-
+       
         });
+    
 
     </script>
 </body>
-</html>
+</html> 
